@@ -5,7 +5,6 @@ require("dotenv").config();
 
 app.use(express.json());
 
-// Rotas da API
 const personRoutes = require("./routes/personRoutes");
 
 app.use("/person", personRoutes);

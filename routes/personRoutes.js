@@ -51,4 +51,36 @@ router.get("/:id", async (request, response) => {
   }
 });
 
+router.put("/:id", async (request, response) => {
+  const { id } = request.params;
+  const { name, salary, approved } = request.body;
+
+  const person = {
+    name,
+    salary,
+    approved,
+  };
+
+  try {
+    const updatedPerson = await Person.updateMany({ _id: id }, person);
+
+    if (!updatedPerson) {
+      response.status(422).send({ Message: "Usuário não encontrado" });
+      return;
+    }
+
+    response.status(200).send(person);
+  } catch (error) {
+    response.status(500).send({ error: error.message });
+  }
+});
+
+router.delete("/:id", (request, response) => {
+  const id = request.params;
+
+  const person = Person.deleteOne({ _id: id }).exec();
+
+  response.status(200).send({ message: "Deleted" });
+});
+
 module.exports = router;
