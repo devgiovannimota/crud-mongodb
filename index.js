@@ -3,14 +3,13 @@ const mongoose = require("mongoose");
 const app = express();
 require("dotenv").config();
 
-const Person = require("./models/Person");
-
 app.use(express.json());
 
-app.get("/", (request, response) => {
-  response.status(200).send({ message: "oie" });
-});
-console.log();
+// Rotas da API
+const personRoutes = require("./routes/personRoutes");
+
+app.use("/person", personRoutes);
+
 mongoose
   .connect(
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@apcluster.shmccpz.mongodb.net/?retryWrites=true&w=majority`
